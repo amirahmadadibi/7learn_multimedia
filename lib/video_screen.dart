@@ -30,21 +30,38 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : CircularProgressIndicator()),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _controller.value.isPlaying
-              ? _controller.pause()
-              : _controller.play();
+      body: GestureDetector(
+        onTap: () {
+          setState(() {
+            _controller.value.isPlaying
+                ? _controller.pause()
+                : _controller.play();
+          });
         },
-        child:
-            Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+        child: Center(
+            child: _controller.value.isInitialized
+                ? Stack(
+                    fit: StackFit.expand,
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      ),
+                      Align(
+                        alignment: FractionalOffset(0.5, 0.5),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          color: Colors.white,
+                          child: Icon(_controller.value.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow),
+                        ),
+                      )
+                    ],
+                  )
+                : CircularProgressIndicator()),
       ),
     );
   }
