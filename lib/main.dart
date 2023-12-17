@@ -1,4 +1,11 @@
+import 'dart:io';
+
+import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_media/bloc/home_bloc.dart';
+import 'package:multi_media/bloc/home_event.dart';
+import 'package:multi_media/home_screen.dart';
 import 'package:multi_media/podcast_screen.dart';
 import 'package:multi_media/video_screen.dart';
 
@@ -11,62 +18,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: PodcastScreen()
-        //   SafeArea(
-        //     child:
-        //     Scaffold(
-        //       backgroundColor: Color(0XFFF5F5F5),
-        //       appBar: AppBar(
-        //         toolbarHeight: 86,
-        //         backgroundColor: Colors.white,
-        //         elevation: 0,
-        //         flexibleSpace: Center(
-        //           child: SizedBox(
-        //             height: 36,
-        //             width: 148,
-        //             child: Image.asset('assets/images/logo.png'),
-        //           ),
-        //         ),
-        //       ),
-        //       body: ListView.builder(
-        //         itemCount: 100,
-        //         itemBuilder: (context, index) {
-        //           return Container(
-        //             height: 150,
-        //             margin: const EdgeInsets.fromLTRB(25, 0, 25, 20),
-        //             padding: const EdgeInsets.all(10),
-        //             decoration: BoxDecoration(
-        //                 borderRadius: BorderRadius.circular(6),
-        //                 color: Colors.white),
-        //             child: Row(
-        //               children: [
-        //                 Expanded(
-        //                   child: Column(
-        //                     crossAxisAlignment: CrossAxisAlignment.end,
-        //                     children: [
-        //                       Text('asdfasdfasd'),
-        //                       Text('asdfasdfasd'),
-        //                       Text('asdfasdfasd'),
-        //                     ],
-        //                   ),
-        //                 ),
-        //                 const SizedBox(
-        //                   width: 15,
-        //                 ),
-        //                 Container(
-        //                   height: 150,
-        //                   width: 120,
-        //                   decoration: BoxDecoration(
-        //                       borderRadius: BorderRadius.circular(3),
-        //                       color: Colors.black),
-        //                 ),
-        //               ],
-        //             ),
-        //           );
-        //         },
-        //       ),
-        //     ),
-        //   ),
-        );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: BlocProvider(
+        create: (contect) {
+          var bloc = HomeBloc();
+          bloc.add(HomeInit());
+          return bloc;
+        },
+        child: HomeScreen(),
+      ),
+    );
   }
 }
+

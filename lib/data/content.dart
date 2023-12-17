@@ -21,8 +21,8 @@ class Content {
         description: jsonObject['description'],
         date: jsonObject['date'],
         thumnailUrl:
-            'https://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['thubnail_url']}',
+            'http://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['thubnail_url']}',
         contentUrl:
-            'https://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['content_link']}');
+            'http://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['content_link']}');
   }
 }

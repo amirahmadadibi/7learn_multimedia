@@ -1,5 +1,10 @@
-abstract class HomeState{}
+import 'package:multi_media/data/content.dart';
 
-class HomeLoading extends HomeState{}
+abstract class HomeState {}
 
-class HomeDataFeteched extends HomeState{}
+class HomeLoading extends HomeState {}
+
+class HomeDataFeteched extends HomeState {
+  List<Content> contentList;
+  HomeDataFeteched(this.contentList);
+}
