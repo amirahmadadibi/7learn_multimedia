@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_media/bloc/home_bloc.dart';
 import 'package:multi_media/bloc/home_state.dart';
+import 'package:multi_media/podcast_screen.dart';
+import 'package:multi_media/video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,55 +39,82 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView.builder(
                   itemCount: state.contentList.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 150,
-                      margin: const EdgeInsets.fromLTRB(25, 0, 25, 20),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.white),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  state.contentList[index].title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.end,
+                    return GestureDetector(
+                      onTap: () {
+                        if (state.contentList[index].isVideo) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => VideoScreen()));
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => PodcastScreen()));
+                        }
+                      },
+                      child: Container(
+                        height: 150,
+                        margin: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Colors.white),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      state.contentList[index].title,
+                                      style: TextStyle(
+                                          fontFamily: 'vazir',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(3),
+                                      child: Text(
+                                        state.contentList[index].date,
+                                        style: TextStyle(
+                                            fontFamily: 'vazir', fontSize: 14),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(3),
+                                      child: Text(
+                                        state.contentList[index].description,
+                                        style: TextStyle(
+                                            fontFamily: 'vazir', fontSize: 14),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  state.contentList[index].date,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.end,
-                                ),
-                                Text(
-                                  state.contentList[index].description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.end,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Container(
-                            height: 150,
-                            width: 120,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(3),
-                                color: Colors.black),
-                            child: Image.network(
-                              state.contentList[index].thumnailUrl,
-                              fit: BoxFit.cover,
+                            const SizedBox(
+                              width: 15,
                             ),
-                          ),
-                        ],
+                            Container(
+                              height: 150,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3),
+                                  color: Colors.black),
+                              child: Image.network(
+                                state.contentList[index].thumnailUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
