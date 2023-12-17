@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_media/podcast_screen.dart';
 import 'package:multi_media/video_screen.dart';
 
 void main() {
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: VideoScreen()
+    return MaterialApp(debugShowCheckedModeBanner: false, home: PodcastScreen()
         //   SafeArea(
         //     child:
         //     Scaffold(
