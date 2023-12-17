@@ -25,6 +25,6 @@ class Content {
             'http://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['thubnail_url']}',
         contentUrl:
             'http://pb.7learn.com/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['content_link']}',
-            isVideo: jsonObject['is_video']);
+        isVideo: jsonObject['is_video']);
   }
 }

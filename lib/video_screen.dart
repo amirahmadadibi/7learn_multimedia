@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({super.key});
+  String video_url;
+  VideoScreen({required this.video_url, super.key});
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -14,8 +15,7 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void initState() {
-    Uri videoUri = Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
+    Uri videoUri = Uri.parse(widget.video_url);
 
     _controller = VideoPlayerController.networkUrl(videoUri);
 
@@ -68,7 +68,8 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void dispose() {
-    super.dispose();
+    AutoOrientation.portraitAutoMode();
     _controller.dispose();
+    super.dispose();
   }
 }

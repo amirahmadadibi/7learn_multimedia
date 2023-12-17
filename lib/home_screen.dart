@@ -43,7 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         if (state.contentList[index].isVideo) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => VideoScreen()));
+                              builder: (context) => VideoScreen(
+                                    video_url:
+                                        state.contentList[index].contentUrl,
+                                  )));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PodcastScreen()));
