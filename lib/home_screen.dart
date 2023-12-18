@@ -49,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PodcastScreen()));
+                              builder: (context) => PodcastScreen(
+                                    contetn: state.contentList[index],
+                                  )));
                         }
                       },
                       child: Container(

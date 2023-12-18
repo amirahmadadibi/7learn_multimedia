@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:multi_media/data/content.dart';
 
 class PodcastScreen extends StatefulWidget {
-  const PodcastScreen({super.key});
+  Content contetn;
+  PodcastScreen({required this.contetn, super.key});
 
   @override
   State<PodcastScreen> createState() => _PodcastScreenState();
 }
 
 class _PodcastScreenState extends State<PodcastScreen> {
+  bool isPlaying = false;
+  AudioPlayer palyer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    palyer.setUrl(widget.contetn.contentUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +31,8 @@ class _PodcastScreenState extends State<PodcastScreen> {
             children: [
               Expanded(
                   flex: 3,
-                  child: Image.asset(
-                    'assets/images/test.png',
+                  child: Image.network(
+                    widget.contetn.thumnailUrl,
                     fit: BoxFit.cover,
                   )),
               Expanded(flex: 2, child: Container())
@@ -41,25 +53,38 @@ class _PodcastScreenState extends State<PodcastScreen> {
               children: [
                 Container(
                   width: 260,
-                  height: 350,
-                  child: Image.asset('assets/images/test.png'),
-                ),
-                Text(
-                  'قهرمانان کتاب',
-                  style: TextStyle(
-                      fontFamily: 'vazir',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22),
+                  height: 320,
+                  child: Image.network(
+                    widget.contetn.thumnailUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                    'در این پادکست، ما داستان‌های معروف و شخصیت‌های دوست‌داشتنی کتاب‌های کودکان را معرفی می‌کنیم. از "هری پاتر" گرفته تا "ماتیلدا"، هر قهرمان کتاب داستان جذاب خودش را دارد.',
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    widget.contetn.title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'vazir', fontSize: 16)),
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontFamily: 'vazir',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(widget.contetn.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: 'vazir', fontSize: 16)),
+                ),
                 const Spacer(),
                 Row(
                   children: [
@@ -67,7 +92,23 @@ class _PodcastScreenState extends State<PodcastScreen> {
                     const SizedBox(
                       width: 25,
                     ),
-                    Image.asset('assets/images/icon_play.png'),
+                    GestureDetector(
+                        onTap: () {
+                          if (isPlaying) {
+                            setState(() {
+                              isPlaying = false;
+                            });
+                            palyer.pause();
+                          } else {
+                            setState(() {
+                              isPlaying = true;
+                            });
+                            palyer.play();
+                          }
+                        },
+                        child: (isPlaying)
+                            ? Image.asset('assets/images/icon_pause.png')
+                            : Image.asset('assets/images/icon_play.png')),
                     const SizedBox(
                       width: 25,
                     ),
@@ -80,9 +121,19 @@ class _PodcastScreenState extends State<PodcastScreen> {
           Positioned(
               left: 20,
               top: 20,
-              child: Image.asset('assets/images/icon_back.png'))
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Image.asset('assets/images/icon_back.png')))
         ],
       ),
     ));
+  }
+
+  @override
+  void dispose() {
+    palyer.stop();
+    super.dispose();
   }
 }
