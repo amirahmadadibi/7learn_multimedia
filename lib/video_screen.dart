@@ -12,7 +12,7 @@ class VideoScreen extends StatefulWidget {
 
 class _VideoScreenState extends State<VideoScreen> {
   late VideoPlayerController _controller;
-
+  bool isPlaying = false;
   @override
   void initState() {
     Uri videoUri = Uri.parse(widget.video_url);
@@ -33,6 +33,7 @@ class _VideoScreenState extends State<VideoScreen> {
       body: GestureDetector(
         onTap: () {
           setState(() {
+            isPlaying = !isPlaying;
             _controller.value.isPlaying
                 ? _controller.pause()
                 : _controller.play();
@@ -50,13 +51,23 @@ class _VideoScreenState extends State<VideoScreen> {
                       ),
                       Align(
                         alignment: FractionalOffset(0.5, 0.5),
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          color: Colors.white,
-                          child: Icon(_controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow),
+                        child: AnimatedOpacity(
+                          opacity: (isPlaying) ? 0.0 : 1.0,
+                          duration: Duration(microseconds: 750),
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              _controller.value.isPlaying
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                              size: 40,
+                            ),
+                          ),
                         ),
                       )
                     ],

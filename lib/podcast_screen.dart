@@ -54,9 +54,14 @@ class _PodcastScreenState extends State<PodcastScreen> {
                 Container(
                   width: 260,
                   height: 320,
-                  child: Image.network(
-                    widget.contetn.thumnailUrl,
-                    fit: BoxFit.cover,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      widget.contetn.thumnailUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(

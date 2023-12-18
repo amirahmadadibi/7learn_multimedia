@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               if (state is HomeLoading) {
-                return CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
               if (state is HomeDataFeteched) {
                 return ListView.builder(
@@ -107,17 +109,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(
                               width: 15,
                             ),
-                            Container(
-                              height: 150,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  color: Colors.black),
-                              child: Image.network(
-                                state.contentList[index].thumnailUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 150,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(3),
+                                      color: Colors.black),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(3),
+                                    child: Image.network(
+                                      state.contentList[index].thumnailUrl,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 150,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(3),
+                                      color: Color.fromARGB(125, 0, 0, 0)),
+                                  child: (state.contentList[index].isVideo)
+                                      ? Image.asset(
+                                          'assets/images/icon_mini_video.png')
+                                      : Image.asset(
+                                          'assets/images/icon_mini_podcast.png'),
+                                )
+                              ],
+                            )
                           ],
                         ),
                       ),
